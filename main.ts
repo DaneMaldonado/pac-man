@@ -1,22 +1,27 @@
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     Duck.vy = -110
 })
+function FalseDifficultyInput () {
+    if (Difficulty != 0 && (Difficulty != 1 && Difficulty != 2)) {
+        game.splash("Please choose a different number")
+        game.reset()
+    }
+}
 function LevelDifficulty () {
     if (Difficulty == 1) {
-        Projectile1 = sprites.createProjectileFromSide(TopImage, -10, 0)
+        TopImage.vx += -10
     } else if (Difficulty == 2) {
-        Projectile1 = sprites.createProjectileFromSide(TopImage, -20, 0)
+        TopImage.vx += -20
     } else if (Difficulty == 3) {
-        Projectile1 = sprites.createProjectileFromSide(TopImage, -35, 0)
+        TopImage.vx += -35
     }
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(null)
 })
-let BottomImage: Image = null
+let BottomImage: Sprite = null
 let Gap = 0
-let TopImage: Image = null
-let Projectile1: Sprite = null
+let TopImage: Sprite = null
 let Difficulty = 0
 let Duck: Sprite = null
 Duck = sprites.create(img`
@@ -166,10 +171,11 @@ scroller.scrollBackgroundWithSpeed(-25, 0)
 Difficulty = 3
 Difficulty = game.askForNumber("Choose your difficulty: 0 to 2.", 1)
 LevelDifficulty()
+FalseDifficultyInput()
 game.onUpdateInterval(2150, function () {
     Gap = randint(0, 1)
     if (Gap == 1) {
-        TopImage = img`
+        TopImage = sprites.create(img`
             .....6feeeeeeeeeef6.....
             ....6776eeeeeeeee676....
             ...6777666eeee6667776...
@@ -218,8 +224,8 @@ game.onUpdateInterval(2150, function () {
             ........................
             ........................
             ........................
-            `
-        BottomImage = img`
+            `, SpriteKind.Projectile)
+        BottomImage = sprites.create(img`
             ........................
             ........................
             ........................
@@ -276,10 +282,10 @@ game.onUpdateInterval(2150, function () {
             ...668ce7768867788666...
             ......ce77eeee67ee......
             ......ce6eeeeee6ee......
-            `
+            `, SpriteKind.Projectile)
     }
     if (Gap == 0) {
-        TopImage = img`
+        TopImage = sprites.create(img`
             .....6fceeeeeeeeee6.....
             ....6776eeeeeeeee676....
             ...6777666eeee6666776...
@@ -336,8 +342,8 @@ game.onUpdateInterval(2150, function () {
             ........................
             ........................
             ........................
-            `
-        BottomImage = img`
+            `, SpriteKind.Projectile)
+        BottomImage = sprites.create(img`
             ........................
             ........................
             ........................
@@ -408,8 +414,8 @@ game.onUpdateInterval(2150, function () {
             ......ee77eeee67ee......
             ......ee6eeeeee6ce......
             ......eefeeeeeeece......
-            `
+            `, SpriteKind.Projectile)
     }
-    Projectile1.top = -17
-    Projectile1.bottom = scene.screenHeight()
+    TopImage.top = -17
+    BottomImage.bottom = scene.screenHeight()
 })

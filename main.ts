@@ -1,8 +1,32 @@
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     Duck.vy = -110
 })
+info.onScore(60, function () {
+    for (let index = 0; index < 40; index++) {
+        TopImage.vx = -38
+        BottomImage.vx = -38
+        Points.vx = -38
+        pause(500)
+    }
+})
+info.onScore(30, function () {
+    for (let index = 0; index < 50; index++) {
+        TopImage.vx = -32
+        BottomImage.vx = -32
+        Points.vx = -32
+        pause(500)
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     game.gameOver(false)
+})
+info.onScore(80, function () {
+    for (let index = 0; index < 1000; index++) {
+        TopImage.vx = -44
+        BottomImage.vx = -44
+        Points.vx = -44
+        pause(500)
+    }
 })
 function FalseDifficultyInput () {
     if (Difficulty != 0 && (Difficulty != 1 && Difficulty != 2)) {
@@ -28,10 +52,10 @@ function LevelDifficulty () {
         }
     }
 }
+let Gap = 0
 let Points: Sprite = null
 let BottomImage: Sprite = null
 let TopImage: Sprite = null
-let Gap = 0
 let Difficulty = 0
 let Duck: Sprite = null
 Duck = sprites.create(img`
